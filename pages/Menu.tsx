@@ -69,11 +69,13 @@ const Menu: React.FC = () => {
             <span style={{ WebkitTextStroke: '1px gray/9' }}>THE</span> <span className="text-[#ffbb00]">GOODS</span>
           </h2>
           <p
-            className="text-white mt-4 md:mt-6 italic text-sm sm:text-base md:text-xl max-w-3xl mx-auto leading-tight font-black"
-            style={{ WebkitTextStroke: '1px gray-900' }}
-          >
-            World-class wings, ice-cold taps, and the boldest flavors in Corpus Christi.
-          </p>
+  className="text-white mt-4 md:mt-6 italic text-sm sm:text-base md:text-xl max-w-3xl mx-auto leading-tight font-black bg-[#f4af25]"
+  style={{ WebkitTextStroke: '1px rgba(0, 0, 0, 0.6)' }}
+
+>
+  World-class wings, ice-cold taps, and the boldest flavors in Corpus Christi.
+</p>
+
         </header>
 
         {/* Navigation Tabs */}
