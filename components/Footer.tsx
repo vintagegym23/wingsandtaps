@@ -40,13 +40,16 @@ const Footer: React.FC = () => {
           <h4 className="font-black text-[#ff4d00] text-lg md:text-xl mb-1 md:mb-2 italic tracking-tighter uppercase">WHEN</h4>
           <div className="font-black text-xs md:text-sm uppercase flex flex-col gap-2">
             <div className="flex justify-between border-b border-zinc-800 pb-1">
-              <span>MON-WED, SUN</span> <span className="text-[#ffbb00]">11AM - 10PM</span>
+              <span>MON-TUE-WED</span> <span className="text-[#ffbb00]">11AM - 10PM</span>
             </div>
             <div className="flex justify-between border-b border-zinc-800 pb-1">
               <span>THURSDAY</span> <span className="text-[#ffbb00]">11AM - 11PM</span>
             </div>
             <div className="flex justify-between border-b border-zinc-800 pb-1">
-              <span>FRI-SAT</span> <span className="text-[#ffbb00]">11AM - 12AM</span>
+              <span>FRI-SAT</span> <span className="text-[#ffbb00]">10AM - 12AM</span>
+            </div>
+            <div className="flex justify-between border-b border-zinc-800 pb-1">
+              <span>SUNDAY</span> <span className="text-[#ffbb00]">10AM - 10PM</span>
             </div>
           </div>
         </div>
@@ -87,7 +90,7 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto mt-12 md:mt-20 pt-6 md:pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-[8px] md:text-[10px] font-black tracking-widest opacity-40 uppercase">
-        <p>Â© 2026 WINGS N TAPS CORPUS CHRISTI. SOUTH SIDE PRIDE.</p>
+        <p>© 2026 WINGS N TAPS CORPUS CHRISTI. SOUTH SIDE PRIDE.</p>
         <div className="flex gap-6 md:gap-8">
           <a href="#" className="hover:text-[#ffbb00] transition-colors">PRIVACY</a>
           <a href="#" className="hover:text-[#ffbb00] transition-colors">TERMS</a>
@@ -98,3 +101,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+

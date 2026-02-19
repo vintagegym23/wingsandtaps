@@ -48,9 +48,10 @@ const Contact: React.FC = () => {
                 <div className="flex flex-col">
                   <span className="text-zinc-500 text-xs font-sans uppercase tracking-widest mb-1">Hours</span>
                   <div className="text-xs md:text-sm font-bold space-y-1">
-                    <p>MON-WED, SUN: <span className="float-right text-[#ffbb00]">11AM - 10PM</span></p>
+                    <p>MON-TUE-WED: <span className="float-right text-[#ffbb00]">11AM - 10PM</span></p>
                     <p>THURSDAY: <span className="float-right text-[#ffbb00]">11AM - 11PM</span></p>
-                    <p>FRI-SAT: <span className="float-right text-[#ffbb00]">11AM - 12AM</span></p>
+                    <p>FRI-SAT: <span className="float-right text-[#ffbb00]">10AM - 12AM</span></p>
+                    <p>SUNDAY: <span className="float-right text-[#ffbb00]">10AM - 10PM</span></p>
                   </div>
                 </div>
 

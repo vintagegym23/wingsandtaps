@@ -20,7 +20,7 @@ const App: React.FC = () => {
           <div className="whitespace-nowrap flex animate-marquee font-black italic text-xs sm:text-sm md:text-xl tracking-tighter uppercase">
             {[...Array(5)].map((_, i) => (
               <span key={i} className="px-4 sm:px-6 md:px-8 flex-shrink-0">
-                HAPPY HOUR: $3 DOMESTICS â€¢ HALF-PRICE WINGS â€¢ SPURS GAME SPECIALS â€¢ BEST DAMN WINGS IN SA â€¢
+                HAPPY HOUR: $3 DOMESTICS • HALF-PRICE WINGS • COMING SOON: NEW SAUCES & WEEKLY ADS • BEST DAMN WINGS IN CORPUS CHRISTI •
               </span>
             ))}
           </div>
@@ -55,3 +55,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
