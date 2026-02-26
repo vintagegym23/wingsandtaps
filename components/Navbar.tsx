@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import logo from '../images/logo.png';
-import logoGif from "../images/logo.gif"; 
+import logoGif from "../images/logo.gif";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +12,7 @@ const Navbar: React.FC = () => {
     { name: 'Home', path: '/' },
     { name: 'Our Story', path: '/story' },
     { name: 'Menu', path: '/menu' },
+    { name: 'Menu 2', path: '/menu2' },
     { name: 'Specials', path: '/specials' },
     { name: 'Order Now', path: '#', isButton: true },
     // { name: 'Gallery', path: '/gallery' },
@@ -46,11 +47,10 @@ const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-2 md:px-3 py-1 font-black text-xs md:text-base border-2 border-black transition-all ${
-                  isActive(link.path)
+                className={`px-2 md:px-3 py-1 font-black text-xs md:text-base border-2 border-black transition-all ${isActive(link.path)
                   ? 'bg-primary text-black rotate-0 shadow-none'
                   : 'bg-white hover:bg-primary rotate-1 hover:rotate-0'
-                }`}
+                  }`}
               >
                 {link.name.toUpperCase()}
               </Link>

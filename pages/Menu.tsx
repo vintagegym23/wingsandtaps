@@ -118,7 +118,7 @@
 //           {Object.keys(menuData).map((category) => (
 //             <button
 //               key={category}
-//               onClick={() => setActiveCategory(category)}
+//               onClick={() => setActiveCategory(category as keyof typeof menuData)}
 //               className={`px-3 sm:px-6 md:px-8 py-2 sm:py-3 rounded-md border-2 text-xs sm:text-sm font-black uppercase tracking-widest transition-all duration-300 ${activeCategory === category
 //                   ? 'bg-[#ffbb00] text-black border-[#ffbb00] shadow-[4px_4px_0px_0px_black]'
 //                   : 'bg-black/90 text-white border-white/20 hover:border-[#ffbb00]'
@@ -199,7 +199,7 @@
 
 // export default Menu;
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 // Importing local assets
 import appetizersImg from '../images/appetizers.png';
@@ -212,22 +212,21 @@ import flavorsImg from '../images/flavors.png';
 import miniTacos from '../images/miniTacos.png';
 import sides from '../images/sides1.png';
 import desserts from '../images/desserts.png';
-const Menu: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState('Appetizers');
 
-  const categoryBackgrounds: Record<string, string> = {
-    'Appetizers': appetizersImg,
-    'Salads': saladsSoupsImg,
-    'Wings & Tenders': wingsTendonsImg,
-    'Flavors': flavorsImg,
-    'Sandwiches & Burgers': sandwichesBurgersImg,
-    'Mini Tacos': miniTacos,
-    'Sides': sides,
-    'Kids': kidsMenuImg,
-    'Desserts': desserts
-  };
+// Static lookup – lives outside the component so it never re-creates on render
+const categoryBackgrounds: Record<string, string> = {
+  'Appetizers': appetizersImg,
+  'Salads': saladsSoupsImg,
+  'Wings & Tenders': wingsTendonsImg,
+  'Flavors': flavorsImg,
+  'Sandwiches & Burgers': sandwichesBurgersImg,
+  'Mini Tacos': miniTacos,
+  'Sides': sides,
+  'Kids': kidsMenuImg,
+  'Desserts': desserts,
+};
 
-  const menuData = {
+const menuData = {
     'Appetizers': [
       { name: 'Fried Pickle Pears or Chips', desc: 'Hand breaded in our signature batter. Served with your choice of dressing.', price: 'Market' },
       { name: 'Battered Avocado Fries', desc: 'Thick slices of avocado coated in a light, crispy batter. Served with a chipotle ranch or cilantro lime dipping sauce.', price: 'Market' },
@@ -287,7 +286,57 @@ const Menu: React.FC = () => {
       { name: 'Warm Brownie', desc: 'Brownie served warm with a scoop of Blue Bell vanilla ice cream.', price: 'Market' },
       { name: 'Cheesecake (Mike’s Pies)', desc: 'Smooth, decadent cheesecake served chilled with a buttery crust.', price: 'Market' },
       { name: 'Fried Sweets', desc: 'Your choice of Fried Brownies, Fried Twinkies, Fried Cookies & Cream, or Fried Oreos.', price: 'Market' }
-    ]
+  ],
+};
+
+// Ordered tab names derived once at module level
+const categories = Object.keys(menuData) as Array<keyof typeof menuData>;
+
+const Menu: React.FC = () => {
+  const [activeCategory, setActiveCategory] = useState<keyof typeof menuData>('Appetizers');
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  // One ref per category section – used for scroll-spy and click-to-scroll
+  const sectionRefs = useRef<Partial<Record<keyof typeof menuData, HTMLDivElement>>>({});
+
+  // Scroll-spy: rAF-throttled listener updates the active tab to whichever section's
+  // top edge is nearest to 30% down from the container top.
+  // Runs once – sectionRefs and categories are stable module-level values.
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let rafId: number;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        // pivot = 30% into the visible area; the section whose header is at or above
+        // this point is considered "in view"
+        const pivot = container.scrollTop + container.clientHeight * 0.3;
+        let active: keyof typeof menuData = categories[0];
+        for (const cat of categories) {
+          const el = sectionRefs.current[cat];
+          if (el && el.offsetTop <= pivot) active = cat;
+        }
+        setActiveCategory(active);
+      });
+    };
+
+    container.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      container.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  // Immediately highlight the clicked tab and smooth-scroll to its section
+  const handleTabClick = (cat: keyof typeof menuData) => {
+    setActiveCategory(cat);
+    const container = scrollContainerRef.current;
+    const section = sectionRefs.current[cat];
+    if (container && section) {
+      container.scrollTo({ top: section.offsetTop, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -310,15 +359,17 @@ const Menu: React.FC = () => {
           </p>
         </header>
 
+        {/* Tab bar – now acts as scroll-spy anchors */}
         <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 md:mb-12">
-          {Object.keys(menuData).map((category) => (
+          {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-3 sm:px-6 md:px-8 py-2 sm:py-3 rounded-md border-2 text-xs sm:text-sm font-black uppercase tracking-widest transition-all duration-300 ${activeCategory === category
+              onClick={() => handleTabClick(category)}
+              className={`px-3 sm:px-6 md:px-8 py-2 sm:py-3 rounded-md border-2 text-xs sm:text-sm font-black uppercase tracking-widest transition-all duration-300 ${
+                activeCategory === category
                   ? 'bg-[#ffbb00] text-black border-[#ffbb00] shadow-[4px_4px_0px_0px_black]'
                   : 'bg-black/90 text-white border-white/20 hover:border-[#ffbb00]'
-                }`}
+              }`}
             >
               {category}
             </button>
@@ -326,32 +377,42 @@ const Menu: React.FC = () => {
         </div>
 
         <div className="relative p-4 sm:p-6 md:p-12 bg-black/80 backdrop-blur-sm rounded-2xl border-2 sm:border-4 border-black shadow-[12px_12px_0px_0px_rgba(255,187,0,1)] md:shadow-[20px_20px_0px_0px_rgba(255,187,0,1)]">
-          <div className="max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
-            <div className="grid grid-cols-1 gap-4 md:gap-6">
-              {menuData[activeCategory as keyof typeof menuData].map((item: any, idx) => (
-                <div key={idx} className="border-b border-white/10 pb-6 md:pb-8 group last:border-0">
-                  <div className="flex justify-between items-start mb-2 md:mb-3 gap-2">
-                    <h3 className="text-lg sm:text-2xl font-black text-[#ffbb00] drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:text-white transition-colors uppercase tracking-tight">
-                      {item.name}
-                    </h3>
-                    {(item.isSpicy || item.name.includes('Heat') || item.name.includes('Spicy') || item.name.includes('Atomic') || item.name.includes('Nashville')) && <span className="text-xl md:text-2xl animate-pulse flex-shrink-0">🔥</span>}
-                  </div>
-
-                  <p className="text-white text-xs sm:text-sm md:text-base mb-4 md:mb-6 leading-relaxed font-black italic drop-shadow-[0_1.5px_1.5px_rgba(0,0,0,1)]">
-                    {item.desc}
-                  </p>
-
-                  <div className="flex flex-wrap gap-4 md:gap-8 text-xs sm:text-sm font-black uppercase tracking-[0.2em]">
-                    {item.price && (
-                       <div className="flex items-center gap-2">
-                        <span className="text-[#ffbb00] font-black drop-shadow-[0_1px_1px_rgba(0,0,0,1)] underline underline-offset-4">PRICE</span>
-                        <span className="text-white font-black drop-shadow-[0_1px_1px_rgba(0,0,0,1)]">{item.price}</span>
+          {/* Single continuous scrollable list – all categories in sequence */}
+          <div ref={scrollContainerRef} className="max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+            {categories.map((category) => (
+              <div
+                key={category}
+                ref={(el: HTMLDivElement | null) => { if (el) sectionRefs.current[category] = el; }}
+              >
+                <div className="grid grid-cols-1 gap-4 md:gap-6 mb-8 md:mb-12">
+                  {menuData[category].map((item: any, idx: number) => (
+                    <div key={idx} className="border-b border-white/10 pb-6 md:pb-8 group last:border-0">
+                      <div className="flex justify-between items-start mb-2 md:mb-3 gap-2">
+                        <h3 className="text-lg sm:text-2xl font-black text-[#ffbb00] drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:text-white transition-colors uppercase tracking-tight">
+                          {item.name}
+                        </h3>
+                        {(item.isSpicy || item.name.includes('Heat') || item.name.includes('Spicy') || item.name.includes('Atomic') || item.name.includes('Nashville')) && (
+                          <span className="text-xl md:text-2xl animate-pulse flex-shrink-0">🔥</span>
+                        )}
                       </div>
-                    )}
-                  </div>
+
+                      <p className="text-white text-xs sm:text-sm md:text-base mb-4 md:mb-6 leading-relaxed font-black italic drop-shadow-[0_1.5px_1.5px_rgba(0,0,0,1)]">
+                        {item.desc}
+                      </p>
+
+                      <div className="flex flex-wrap gap-4 md:gap-8 text-xs sm:text-sm font-black uppercase tracking-[0.2em]">
+                        {item.price && (
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#ffbb00] font-black drop-shadow-[0_1px_1px_rgba(0,0,0,1)] underline underline-offset-4">PRICE</span>
+                            <span className="text-white font-black drop-shadow-[0_1px_1px_rgba(0,0,0,1)]">{item.price}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
