@@ -2,6 +2,8 @@ import React from 'react';
 import logoGif from "../images/logo.gif";
 
 const Footer: React.FC = () => {
+  const iconClassName = "w-5 md:w-6 h-5 md:h-6";
+
   return (
     <footer className="bg-black text-white pt-16 md:pt-20 lg:pt-32 pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 relative overflow-hidden">
       {/* Top Jagged/Drip Edge */}
@@ -63,24 +65,33 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noreferrer"
               className="w-10 md:w-12 h-10 md:h-12 bg-zinc-900 border border-zinc-700 flex items-center justify-center hover:bg-[#ffbb00] hover:text-black transition-colors rotate-3 text-lg md:text-xl"
+              aria-label="Facebook"
             >
-              <span className="material-symbols-outlined text-sm md:text-base">share</span>
+              <svg viewBox="0 0 320 512" fill="currentColor" className={iconClassName} aria-hidden="true">
+                <path d="M279.14 288l14.22-92.66h-88.91V135.6c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0C152.24 0 104.33 44.38 104.33 124.72v70.62H22.89V288h81.44v224h100.12V288z" />
+              </svg>
             </a>
             <a
               href="https://www.instagram.com/wingsntaps?igsh=MW80NWRlcTVoc3h2NQ%3D%3D&utm_source=qr"
               target="_blank"
               rel="noreferrer"
               className="w-10 md:w-12 h-10 md:h-12 bg-zinc-900 border border-zinc-700 flex items-center justify-center hover:bg-[#ffbb00] hover:text-black transition-colors -rotate-6 text-lg md:text-xl"
+              aria-label="Instagram"
             >
-              <span className="material-symbols-outlined text-sm md:text-base">camera</span>
+              <svg viewBox="0 0 448 512" fill="currentColor" className={iconClassName} aria-hidden="true">
+                <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.2 0-74.7-33.4-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.4 74.7 74.7-33.5 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.9-26.9 26.9-14.8 0-26.9-12-26.9-26.9s12.1-26.9 26.9-26.9c14.9 0 26.9 12 26.9 26.9zm76.1 27.3c-1.7-35.3-9.7-66.7-35.6-92.5S354.7 33.2 319.4 31.5c-35.1-2-140.4-2-175.5 0-35.2 1.7-66.6 9.7-92.5 35.6S13.2 126.4 11.5 161.6c-2 35.1-2 140.4 0 175.5 1.7 35.2 9.7 66.6 35.6 92.5s57.3 33.9 92.5 35.6c35.1 2 140.4 2 175.5 0 35.3-1.7 66.7-9.7 92.5-35.6s33.9-57.3 35.6-92.5c2-35.1 2-140.4 0-175.5zM398.8 388c-7.7 19.3-22.6 34.2-41.9 41.9-29 11.5-97.8 8.9-132.8 8.9s-103.9 2.7-132.8-8.9c-19.3-7.7-34.2-22.6-41.9-41.9-11.5-29-8.9-97.8-8.9-132.8s-2.7-103.9 8.9-132.8c7.7-19.3 22.6-34.2 41.9-41.9 29-11.5 97.8-8.9 132.8-8.9s103.9-2.7 132.8 8.9c19.3 7.7 34.2 22.6 41.9 41.9 11.5 29 8.9 97.8 8.9 132.8s2.6 103.9-8.9 132.8z" />
+              </svg>
             </a>
             <a
               href="https://maps.app.goo.gl/EXpCGRsqxA7u1sLy9?g_st=iw"
               target="_blank"
               rel="noreferrer"
               className="w-10 md:w-12 h-10 md:h-12 bg-zinc-900 border border-zinc-700 flex items-center justify-center hover:bg-[#ffbb00] hover:text-black transition-colors rotate-6 text-lg md:text-xl"
+              aria-label="Location"
             >
-              <span className="material-symbols-outlined text-sm md:text-base">public</span>
+              <svg viewBox="0 0 384 512" fill="currentColor" className={iconClassName} aria-hidden="true">
+                <path d="M172.3 501.7C27.6 291 0 269.4 0 192 0 86 86 0 192 0s192 86 192 192c0 77.4-27.6 99-172.3 309.7-9.5 13.8-29.9 13.8-39.4 0zM192 272a80 80 0 100-160 80 80 0 000 160z" />
+              </svg>
             </a>
           </div>
           <button className="mt-2 md:mt-4 bg-[#ffbb00] text-black font-black py-2 md:py-3 px-3 md:px-4 border-4 border-black rotate-2 hover:scale-105 transition-transform uppercase italic tracking-tighter text-sm md:text-xl shadow-[5px_5px_0px_0px_rgba(255,255,255,0.1)]">
@@ -90,10 +101,19 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto mt-12 md:mt-20 pt-6 md:pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-[8px] md:text-[10px] font-black tracking-widest opacity-40 uppercase">
-        <p>© 2026 WINGS N TAPS CORPUS CHRISTI. SOUTH SIDE PRIDE.</p>
+        <p>ï¿½ 2026 WINGS N TAPS CORPUS CHRISTI. SOUTH SIDE PRIDE.</p>
+        <a
+          href="https://www.claratechitsolutions.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs hover:text-[#ffbb00] transition-colors mx-4 text-center block"
+        >
+          Designed and Developed by <br className="block sm:hidden" />
+          Claratech IT Solutions Pvt Ltd
+        </a>
         <div className="flex gap-6 md:gap-8">
-          <a href="#" className="hover:text-[#ffbb00] transition-colors">PRIVACY</a>
-          <a href="#" className="hover:text-[#ffbb00] transition-colors">TERMS</a>
+          <a href="#" >PRIVACY</a>
+          <a href="#" >TERMS</a>
         </div>
       </div>
     </footer>
@@ -101,4 +121,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-
