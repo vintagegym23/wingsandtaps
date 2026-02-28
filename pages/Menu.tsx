@@ -8,7 +8,7 @@ import sandwichesBurgersImg from '../images/sandwichesAndBurgers.png';
 import kidsMenuImg from '../images/kidsMenu.png';
 import flavorsImg from '../images/flavors.png';
 import miniTacos from '../images/miniTacos.png';
-import sides from '../images/sides1.png';
+import sides from '../images/sides.png';
 import desserts from '../images/desserts.png';
 
 /* =========================
